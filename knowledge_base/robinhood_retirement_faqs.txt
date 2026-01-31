@@ -1,0 +1,280 @@
+Robinhood Retirement FAQs scraped from: https://robinhood.com/us/en/support/retirement/
+================================================================================
+
+ROBINHOOD RETIREMENT FREQUENTLY ASKED QUESTIONS
+
+================================================================================
+ARTICLE: IRA match FAQ
+URL: https://robinhood.com/us/en/support/articles/ira-match-faq/
+================================================================================
+
+Q: What's the IRA match?
+A: The IRA match is a 3% match on annual contributions with Robinhood Gold or 1% without Gold for self-directed Robinhood IRAs. Accounts managed by Robinhood Strategies are not eligible for the IRA match on contributions.
+
+You also can get a 1% match on IRA transfers or old 401(k)s all year with no cap on the match you can earn.
+
+The IRA contribution limits set by the IRS for 2025 are:
+* $7,000 if you are under age 50, which means you can earn up to $70 extra (or $210 with Robinhood Gold)
+* $8,000 if you are age 50 or over, which means you can earn up to $80 on top of your contributions (or $240 with Robinhood Gold)
+
+The IRA contribution limits set by the IRS for 2026 are:
+* $7,500 if you are under age 50, which means you can earn up to $75 extra (or $225 with Robinhood Gold)
+* $8,600 if you are age 50 or over, which means you can earn up to $86 on top of your contributions (or $258 with Robinhood Gold)
+
+Note: The match isn't counted toward your annual contribution limits. You can contribute to your IRA for the previous tax year until your tax filing deadline.
+
+Q: How is the IRA match calculated?
+A: For self-directed IRA contributions, you can earn a 1% on annual IRA contributions (up to the contribution limit) from any linked account.
+
+For account transfers, when your IRA transfer completes, the amount of the match is calculated based on the value of the total of the transferred cash plus transferred securities and options, using the National Market System closing price of each position transferred into the account on the trading day before when the transfer settles. Settlement occurs when the securities are posted to the account and available to trade. Note that the match is only available for securities that successfully transfer and settle, and won't be granted for securities that are rejected.
+
+When your old 401(k) rollover completes, the match will be calculated based on the match percent of the total rollover amount. No cap. For example, if you transfer or rollover $100,000 with a 1% match, we'll give you $1,000 on top of your transfer or rollover.
+
+Q: Which contributions are eligible to earn the IRA match?
+A: Without a Gold subscription, you can earn a 1% match on eligible annual IRA contributions, IRA transfers, and old 401(k) rollovers into self-directed IRAs.
+
+Gold members can earn a 3% match on eligible annual contributions, and a 1% match on IRA transfers and old 401(k) rollovers into self-directed IRAs.
+
+Q: How does IRA match work with managed IRAs?
+A: Contributions into IRAs managed by Robinhood Strategies do not currently get an IRA match.
+
+Q: How much can I earn with contributions?
+A: You can earn a 3% match on annual contributions with Robinhood Gold (subscription applies), or a 1% match on annual contributions without a Robinhood Gold subscription into self-directed IRAs. Keep in mind, you must:
+* Hold the assets that earned the match in your IRA for at least 5 years.
+* Maintain your Gold membership for at least 1 year from when you received the Gold match.
+
+Q: Does the IRA match count toward my annual IRA contribution limit?
+A: No. The IRA match counts as interest income in your IRA and doesn't count toward your annual IRA contribution limit.
+
+Q: When will I get the IRA match?
+A: You'll usually get the IRA match right away after your deposits settle. The exact amount of time depends on the type of deposit you're making.
+
+Q: How much match do IRA transfers and old 401(k) rollovers earn?
+A: You can earn a 1% match on all IRA transfers and old 401(k) rollovers into self-directed IRAs, no Gold membership required.
+
+For example, if you transfer $100,000 from an outside IRA, you can earn a 1% match of $1,000.
+
+Q: How long do IRA transfers and old 401(k) rollovers typically take to complete?
+A: For IRA transfers, after we receive an account transfer request, it typically takes 5-7 business days for the transfer to be completed in your Robinhood account. Check out Transfers FAQ for more info.
+
+For old 401(k) rollovers, this process can typically take 2-4 weeks for deposits to complete.
+
+Q: Can I still make prior-year contributions?
+A: Generally, you can contribute to your IRA for the previous tax year until your tax filing deadline.
+
+After the federal tax deadline for the previous tax year (typically April 15th), you can no longer make prior-year contributions in the app or on web classic. Please contact us if you need to request any contribution adjustments.
+
+Q: Is the Robinhood IRA match the same as an employer's 401(k) match?
+A: No, not the same. The Robinhood IRA match and employer 401(k) match both offer matches on contributions. They have the following differences:
+* A 401(k) employer match is a contribution that an employer makes to an employee's retirement account. The Robinhood IRA is entirely different from your employer plan.
+* The Robinhood IRA match is a percentage of your contribution amount, whereas a 401(k) match is generally a percentage of your compensation. The percentage figure should not be used as a basis for comparison or evaluation.
+* Your 401(k) may have a shorter vesting plan than the 5 year holding period required to earn the full Robinhood IRA match.
+
+Keep in mind that limitations apply to both types of retirement accounts. Refer to the IRS IRA Deduction Limits for more information.
+
+Q: Can I earn the IRA match for amounts less than $1?
+A: Yes! The match is calculated to 4 decimal points. We'll add the match to your account after it reaches the next whole cent increment.
+
+For example, if you make 4 individual contributions of $0.25, we'll add a match into your account when it accrues up to $0.01.
+
+Q: Do I get to keep the IRA match if I withdraw money from my IRA?
+A: Keeping the IRA match after withdrawing funds from your IRA depends on how long you've had the assets that earned the match in your Robinhood IRA, the match amount earned in all of your Robinhood IRAs, and the total remaining balance of all of your Robinhood IRAs.
+
+As long as you've held the funds that earned the match for at least 5 years, the IRA match is yours to keep. If you withdraw money earlier than 5 years, and your remaining IRA balance stays at or above your deposit amount that earned the IRA match plus the match amount, it's yours to keep.
+
+For example, if you're a Gold member and you deposited $1,000 and earned a $30 IRA match on June 1, 2025, you can withdraw all of it on or after June 1, 2030.
+
+If you choose to withdraw money from your IRA before June 1, 2030, you'll keep the $30 IRA match as long as the remaining IRA balance is at least $1,030 (which represents your original deposit amount plus the $30 IRA match).
+
+When withdrawing money from your IRA less than 5 years after making the deposit, we may charge an early IRA match removal fee equal to the IRA match amount earned if your remaining IRA balance is lower than your transfer amount that earned the IRA match plus the match amount. If you have multiple Robinhood IRAs, the IRA Match Early Removal Fee is calculated based on all of the IRAs.
+
+Note, transferring your account to another firm also may result in an early IRA match removal fee. For more information, refer to Are there fees if I transfer my IRA out of Robinhood?
+
+Q: Can I keep the IRA match if I cancel my Gold membership?
+A: Keeping your full IRA match after canceling your Gold membership depends on how long you've been a Gold member after earning your first Gold match.
+
+As long as you remain a Gold member for at least 1 year from the date of your first Gold match, you can keep the full match.
+
+For example, if you're a Gold member who contributed $1,000 and earned a $30 IRA match on April 1, 2025, you can keep all of it if you cancel your Gold membership on or after April 1, 2026.
+
+If you cancel your Gold membership before April 1, 2026, you'll lose the additional 2% of $20 in this example as the Robinhood Gold cancellation IRA match removal fee. Keep in mind, you would be eligible to keep the 1% match, or $10 in this example, which has been offered to non-Gold customers.
+
+KEEP IN MIND: If you elect to downgrade from Robinhood Gold early, or are downgraded for any reason (ex. Failure to pay the monthly Gold subscription fee in your individual investing account), you'll need to have enough uninvested cash in your IRA to cover what you owe. Otherwise, the fee charge may create a cash deficit and we may sell off some of your positions to cover the IRA match removal fee. We'll notify you if this scenario occurs. To add cash, you can either transfer money from another account or liquidate assets in your IRA.
+
+Note that IRS contribution limits may prevent you from making a deposit to your IRA.
+
+Q: How can I add money to my Robinhood IRA?
+A: You can add money through one of the following.
+* New contributions: Check out IRA Contributions for more info.
+* Transfers from IRAs from other firms: Check out IRA Transfers for more info.
+* Rollovers from old 401(k)s or other employer plans: Check out Rollovers for more info.
+
+Q: Are there fees if I transfer my IRA out of Robinhood?
+A: Generally, you'll be charged an early IRA match removal fee if a transfer out of your IRA:
+* If it's less than 5 years after making the deposit that earned the IRA match
+* And your remaining IRA balance is less than the deposit amount that earned the IRA match plus the IRA match amount
+
+NOTE: The IRA Match Early Removal Fee will be calculated based on all of your Robinhood IRAs, if you have multiple IRAs with Robinhood.
+
+Otherwise, you get to keep the IRA match.
+
+If you don't have any cash in your IRA, then the early IRA match removal fee will show up as a debit at the other firm. If you have cash available in your IRA, the early IRA match removal fee will be deducted from your cash balance.
+
+Also, the fee for an outgoing transfer with the Automated Customer Account Transfer Service (ACATS) is $100.
+
+For details, review our fee schedule.
+
+Q: What happens if I earn an IRA match in my traditional IRA but then want to convert it to my Roth IRA?
+A: The IRA match generally would be taxable during a conversion because it's counted as interest income for tax reporting purposes. Everyone has a different tax situation and should consult a tax advisor. Robinhood does not provide tax advice.
+
+Q: How is the IRA match treated for tax reporting purposes?
+A: The IRA match on annual contributions, transfers, and 401(k) rollovers are considered income earned by the IRA account for tax reporting purposes. We won't deliver a 1099 for the match due to the tax status of IRAs.
+
+================================================================================
+ARTICLE: IRA overview
+URL: https://robinhood.com/us/en/support/articles/ira-overview/
+================================================================================
+
+Q: What types of IRAs does Robinhood offer?
+A: Robinhood offers two types of IRAs: Traditional IRA and Roth IRA. For both types, you can open either a self-directed IRA (you pick your investments) or a managed one (handled via "Robinhood Strategies"). You're allowed up to four IRAs at Robinhood: self-directed traditional IRA, self-directed Roth IRA, managed traditional IRA, and managed Roth IRA.
+
+Q: What are the tax advantages of Traditional IRA?
+A: Contributions may be made with pre-tax dollars, potentially deductible now and taxed later upon withdrawal. You must have earned income to contribute.
+
+Q: What are the tax advantages of Roth IRA?
+A: Contributions made after taxes, with potential for tax-free withdrawals if certain requirements are met (e.g. age, holding period). Eligibility depends on income limits (MAGI).
+
+Q: What are the IRA contribution limits for 2025?
+A: For the 2025 tax year: Under age 50 → max $7,000 across all your IRAs. Age 50 or older → max $8,000.
+
+Q: What are the IRA contribution limits for 2026?
+A: For the 2026 tax year: Under age 50 → max $7,500. Age 50 or older → $8,600.
+
+Q: What are the Roth IRA income limits?
+A: For Roth IRAs, you must be under certain MAGI thresholds. For 2025: under $165,000 single, under $246,000 jointly. For 2026: MAGI under $168,000 for single filers; under $252,000 for joint filers.
+
+Q: How can I fund my IRA?
+A: You can fund your IRA by linking external or internal bank accounts and doing transfers. You can also rollover or transfer in from existing IRAs or employer plans (401(k)).
+
+Q: What is the IRA match program?
+A: Robinhood offers an IRA match (extra contribution from Robinhood) with terms: If you subscribe to Robinhood Gold ($5/month), eligible annual IRA contributions are matched at 3%. If not, the match is 1%. Transfers / rollovers also qualify for 1% match year-round. Matched funds must stay in the IRA for at least 5 years to avoid an Early IRA Match Removal Fee. Also, if subscribing to Gold, remain a Gold subscriber 1 year after your first Gold match to keep the full Gold match.
+
+Q: What can I invest in with my IRA?
+A: Self-directed IRAs allow trading in stocks, ETFs, and options (if you meet eligibility). Managed IRAs (Robinhood Strategies) are handled by professionals; some features (like matching) don't apply to managed IRAs.
+
+Q: What is an IRA limited margin account?
+A: IRA limited margin accounts let you trade with unsettled funds from sales (stock or options); cash accounts require waiting periods (1 business day) for trades after sales. You cannot borrow against IRA holdings or have a debit balance like in margin investing in standard brokerage accounts.
+
+Q: What are the withdrawal rules for Traditional IRAs?
+A: Withdrawals/distributions from Traditional IRAs before age 59½ usually incur a 10% penalty plus taxes. Required Minimum Distributions (RMDs) apply to Traditional IRAs starting at age 73.
+
+Q: What are the withdrawal rules for Roth IRAs?
+A: Roth IRAs have different rules. Contributions can be withdrawn tax- and penalty-free, but earnings may incur penalties if early and requirements not met.
+
+Q: Is my IRA account protected?
+A: IRA accounts are SIPC-protected: up to $500,000 in securities (including up to $250,000 for cash). Robinhood notes that this protection does not cover losses due to market value fluctuations.
+
+================================================================================
+ARTICLE: IRA contributions
+URL: https://robinhood.com/us/en/support/articles/ira-contributions/
+================================================================================
+
+Q: What are the IRA contribution limits and eligibility requirements?
+A: For 2025 Tax Year: Maximum contribution is $7,000 if you're under age 50; $8,000 if 50 or older. Roth IRA eligibility depends on your modified adjusted gross income (MAGI): under $165,000 if filing single; under $246,000 if filing jointly.
+
+For 2026 Tax Year: Maximum contribution increases slightly: $7,500 for under age 50; $8,600 if age 50 or over. Roth IRA income limits also increase: MAGI under $168,000 for single filers; under $252,000 for joint filers.
+
+These limits are the total you can contribute across all of your IRAs, not just Robinhood.
+
+Q: How do I make contributions to a managed IRA?
+A: For Managed IRAs: 1. Navigate to Investing → select your IRA. 2. Under Contributions, select Contribute. 3. Enter amount, choose frequency (one-time or recurring), funding method, contribution type (new or indirect rollover), and tax year. 4. Review and submit.
+
+Q: How do I make contributions to a self-directed IRA?
+A: For Self-Directed IRAs: Steps are similar, but done via Transfers (Deposit or Recurring deposits), selecting source and destination accounts, indicating contribution type, tax year, and frequency.
+
+Q: How can I view my past contributions?
+A: Go to Retirement → Contributions → History to view past contributions.
+
+Q: Can I set up recurring contributions?
+A: Yes, you can set up recurring contributions and choose: Weekly (every Monday), Twice a month, Monthly (e.g. 1st of month), or Quarterly (1st of Jan, Apr, Jul, Oct).
+
+Q: How do I edit or cancel recurring contributions?
+A: For Managed IRAs: via Investing → Recurring contributions. For Self-Directed IRAs: via Transfers → Recurring deposits.
+
+Q: What is a recharacterization?
+A: Recharacterization is moving a contribution from Roth to Traditional IRA (or vice versa) if, for example, you misjudge eligibility or change strategy. Must include Net Income Attributable (NIA) and have both IRA types open and unrestricted.
+
+Q: What is a return of excess contributions?
+A: If you inadvertently exceed the IRS annual limit across all your IRAs, you can return excess contributions. You'll need withdrawable cash. Includes NIA if done before deadlines.
+
+Q: Can I reclassify a contribution's tax year?
+A: If you contributed but meant it for the prior tax year, you can reclassify between tax years (but not into the future). Only applies between January 1 and the tax filing deadline (April 15), unless disaster relief applies.
+
+Q: What are the deadlines for contribution adjustments?
+A: Recharacterizations & returns of excess with NIA must generally be done by April 15 of the following year. There's an automatic 6-month extension to October 15 if you file for it.
+
+Q: What tax forms are used for IRA contributions?
+A: Form 5498 is used to report contributions and is typically issued by Robinhood in May. Form 1099-R is used when there are distributions, recharacterizations, or excess returns. Issued by January 31 of the year following the event.
+
+================================================================================
+ARTICLE: Transfers and Rollovers
+URL: https://robinhood.com/us/en/support/articles/transfers-and-rollovers/
+================================================================================
+
+Q: What is the difference between transfers and rollovers?
+A: Transfers involve moving funds between two retirement accounts of the same type—for example, moving money from one Traditional IRA to another Traditional IRA. Since the accounts are alike, this action is non-reportable to the IRS (i.e., no tax form is needed).
+
+Rollovers occur when you move money from an employer's retirement plan (like a 401(k), 403(b), 457(b), etc.) into a retirement account such as an IRA. Rollovers are reportable but generally not taxable, assuming they meet certain IRS conditions.
+
+Q: What can be rolled over or transferred?
+A: Assets are usually rolled over in cash when coming from employer-sponsored retirement plans. Robinhood does not reimburse fees associated with rollovers. For IRA-to-IRA transfers (from outside brokerages), Robinhood will reimburse the closing or transfer fee up to $75, provided the transfer is $7,500 or more and you supply proof of the fee (like a statement showing it). Eligible assets include equities, options, cash, etc. If you have a 529 plan, you may be able to roll it over into a Robinhood Roth IRA under certain conditions.
+
+Q: How do I transfer an external IRA into Robinhood?
+A: To transfer into Robinhood (IRAs): 1. Go to Retirement → Menu (or Settings). 2. Tap Transfer in an external IRA. 3. Choose Traditional or Roth IRA, select your current brokerage, and submit the request. You can manually enter brokerage/account details or connect your brokerage.
+
+Q: How do I do a direct rollover from a 401(k)?
+A: To do a direct rollover (from a plan like a 401(k)): 1. Request the rollover from your old plan provider, confirming whether your assets are pre-tax or after-tax. 2. Ensure the check is payable properly: e.g., "Robinhood Securities FBO YourName IRA + Robinhood IRA account number." 3. Send the check directly to Robinhood (or if sent to you, forward it) at their PO Box in Detroit, MI.
+
+Q: What is an indirect rollover?
+A: An indirect rollover means you receive the funds personally from your old plan. It's reportable, involves required 20% federal withholding, and must be rolled into a retirement account (IRA) within 60 days to avoid taxable distribution. Robinhood provides steps to indicate this via their app.
+
+Q: What are the benefits of transferring or rolling over?
+A: Benefits include: Consolidate retirement assets, maintain tax-deferred or tax-free growth (depending on account types), broader investment options once rolled into an IRA, and no account maintenance fee at Robinhood (though fees may exist elsewhere).
+
+Q: What should I consider before transferring or rolling over?
+A: Considerations include: You can't take loans against IRAs like you might with some employer plans, some plans include investments not offered in IRAs, loss of certain protections or tax benefits if holding appreciated employer stock may apply, and taking cash out (i.e. cashing the plan out) before age 59½ often incurs taxes and possibly a 10% early withdrawal penalty. There's also a 20% mandatory withholding for federal taxes.
+
+Q: How long do transfers and rollovers take?
+A: IRA transfers (from another IRA) typically take 5–7 business days for completion. Rollover of employer-sponsored plans (401(k), etc.) tend to take 2–4 weeks.
+
+Q: What forms are needed for transfers and rollovers?
+A: Rollovers must be reported to the IRS (Form 1099-R and Form 5498, among others). Transfers between same-type retirement accounts are non-reportable events.
+
+================================================================================
+ARTICLE: Roth Conversions
+URL: https://robinhood.com/us/en/support/articles/roth-conversions/
+================================================================================
+
+Q: What is a Roth conversion?
+A: A Roth conversion allows you to move retirement assets from a traditional IRA to a Roth IRA—either self-directed or managed. This tool is sometimes used as part of a backdoor Roth IRA strategy for people whose income is too high to contribute directly to a Roth IRA.
+
+Q: What are the requirements before I can convert?
+A: You must have both: a funded traditional IRA with Robinhood (self-directed) and a Roth IRA (self-directed or managed) open with Robinhood. You need withdrawable cash in your traditional IRA (i.e. the cash component; securities will have to be liquidated first). The conversion must be done with cash only (no in-kind assets).
+
+Q: How do I do a Roth conversion?
+A: Step-by-step: 1. Open or ensure you have: Traditional IRA (self-directed) and Roth IRA (self-directed or managed). 2. Fund your traditional IRA by contribution, rollover, or transfer. 3. Open a Roth IRA (if you don't already have one). 4. Once the cash is available in the traditional IRA: Go to Retirement → Settings → IRA settings → Actions → Start a Roth conversion. Enter the dollar amount to convert, review the details, and then confirm the conversion.
+
+Q: What is the deadline for Roth conversions?
+A: Must be done by December 31 (or the last business day of the year) of the tax year. If done afterward, conversion counts toward the following year.
+
+Q: What are the tax implications of a Roth conversion?
+A: Converted amount (and any earnings) is generally taxed as ordinary income. A Form 1099-R will be issued for the amounts leaving your traditional IRA. Form 5498 will report amounts moving into your Roth IRA.
+
+Q: Can I reverse a Roth conversion?
+A: No, once you convert to Roth, you can't reverse it. The conversion is irrevocable.
+
+Q: What if I have a Required Minimum Distribution (RMD) due?
+A: If you have an RMD due for the year, you must satisfy that before converting.
+
+Q: What tax forms are issued for Roth conversions?
+A: When you do a conversion: You get Form 1099-R, showing what's leaving the traditional IRA. You also get Form 5498, showing what's being contributed to the Roth IRA from the conversion. Robinhood must report the conversion to IRS and state authorities as required by law.
