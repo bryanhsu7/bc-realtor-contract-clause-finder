@@ -40,3 +40,6 @@ Thumbs.db
 # Environment variables
 .env
 .env.local
+
+# Brainstorm / scratch notes (local only)
+brainstorming/

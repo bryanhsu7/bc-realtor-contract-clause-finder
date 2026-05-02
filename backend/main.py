@@ -23,10 +23,32 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize RAG chain, conversation store, and feedback store
-rag_chain = RAGChain()
+_rag_chain: Optional[RAGChain] = None
 conversation_store = ConversationStore()
 feedback_store = FeedbackStore()
+
+
+def get_rag_chain() -> RAGChain:
+    """Lazily build RAG so / and /health work without OPENAI_API_KEY."""
+    global _rag_chain
+    if _rag_chain is not None:
+        return _rag_chain
+    if not (Config.OPENAI_API_KEY or "").strip():
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "Chat is unavailable: OPENAI_API_KEY is not set. "
+                "Add it to your environment or a .env file in the project root."
+            ),
+        )
+    try:
+        _rag_chain = RAGChain()
+    except Exception as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Chat backend failed to initialize: {e}",
+        ) from e
+    return _rag_chain
 
 
 class ChatRequest(BaseModel):
@@ -68,7 +90,10 @@ async def root():
 @app.get("/health")
 async def health():
     """Health check endpoint."""
-    return {"status": "healthy"}
+    return {
+        "status": "healthy",
+        "chat_available": bool((Config.OPENAI_API_KEY or "").strip()),
+    }
 
 
 class FeedbackRequest(BaseModel):
@@ -113,10 +138,11 @@ async def chat(request: ChatRequest):
 
     conversation_id = request.conversation_id or conversation_store.create_id()
     history = conversation_store.get_recent_messages(conversation_id, last_n_turns=5)
+    rag = get_rag_chain()
 
     try:
         result = await asyncio.wait_for(
-            rag_chain.query(
+            rag.query(
                 request.question, conversation_history=history if history else None
             ),
             timeout=Config.CHAT_TIMEOUT_SECONDS,
@@ -160,6 +186,7 @@ async def chat_stream(request: ChatRequest):
 
     conversation_id = request.conversation_id or conversation_store.create_id()
     history = conversation_store.get_recent_messages(conversation_id, last_n_turns=5)
+    rag_chain = get_rag_chain()
     accumulated = ""
     chunk_timeout = Config.STREAM_CHUNK_TIMEOUT_SECONDS
     total_timeout = Config.STREAM_TOTAL_TIMEOUT_SECONDS

@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { HEADLINE_SECTIONS } from '../data/headlineSections'
+import { apiUrl, describeChatRequestFailure } from '../config/api'
 import './ChatInterface.css'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 const INITIAL_MESSAGES = [
   {
@@ -109,7 +108,7 @@ function ChatInterface() {
         i === messageIndex ? { ...m, feedback: helpful ? 'up' : 'down' } : m
       )
     )
-    fetch(`${API_URL}/api/feedback`, {
+    fetch(apiUrl('/api/feedback'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -146,7 +145,7 @@ function ChatInterface() {
     setIsLoading(true)
 
     try {
-      const response = await fetch(`${API_URL}/api/chat/stream`, {
+      const response = await fetch(apiUrl('/api/chat/stream'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -156,7 +155,10 @@ function ChatInterface() {
       })
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        const detail = await response.text().catch(() => '')
+        const err = new Error(detail.trim() || `HTTP ${response.status}`)
+        err.httpStatus = response.status
+        throw err
       }
 
       const reader = response.body.getReader()
@@ -233,11 +235,12 @@ function ChatInterface() {
       }
     } catch (error) {
       console.error('Error:', error)
+      const content = describeChatRequestFailure(error, error?.httpStatus)
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
-          content: 'Sorry, I encountered an error. Please try again or contact support.',
+          content,
           sources: [],
           isStreaming: false,
         },

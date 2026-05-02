@@ -1,5 +1,7 @@
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
+# SOCKS proxy (ALL_PROXY etc.): OpenAI/httpx needs this or init fails with "socksio not installed"
+httpcore[socks]>=1.0.0
 python-dotenv==1.0.0
 openai>=1.6.1
 chromadb==0.4.15

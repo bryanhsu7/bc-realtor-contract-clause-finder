@@ -1,0 +1,35 @@
+/* Evergreen design system — single source for accent colors and typography */
+
+:root {
+  /* Core accent (readable on white) */
+  --color-accent: #0f766e;
+  --color-accent-dark: #0d5f58;
+  --color-accent-muted: #115e59;
+
+  /* RGB for rgba() shadows and focus rings (teal #0f766e) */
+  --color-accent-rgb: 15, 118, 110;
+
+  /* Gradient stops: saturated teal → deep forest */
+  --color-gradient-start: #14b8a6;
+  --color-gradient-end: #14532d;
+
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-gradient-start) 0%,
+    var(--color-gradient-end) 100%
+  );
+
+  /* Secondary gradient hue for hovers / links that were formerly purple-shifted */
+  --color-accent-deep: #134e4a;
+
+  /* Headline pills — mint / celadon (no lilac) */
+  --color-pill-bg: #ecfdf5;
+  --color-pill-border: #a7f3d0;
+  --color-pill-hover-bg: #d1fae5;
+  --color-pill-hover-border: #34d399;
+  --color-pill-active-bg: #a7f3d0;
+
+  /* Typography — loaded in index.html */
+  --font-heading: 'Fraunces', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+}

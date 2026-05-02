@@ -1,8 +1,14 @@
 """Configuration settings for the backend."""
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
-load_dotenv()
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_env_file = _PROJECT_ROOT / ".env"
+load_dotenv(_env_file)
+if not (os.getenv("OPENAI_API_KEY") or "").strip():
+    load_dotenv(_env_file, override=True)
 
 class Config:
     """Application configuration."""
