@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import ChatInterface from './components/ChatInterface'
 import './App.css'
 
@@ -89,6 +90,7 @@ function App() {
           </div>
         </div>
       )}
+      <Analytics />
     </div>
   )
 }
