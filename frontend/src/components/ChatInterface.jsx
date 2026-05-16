@@ -1,8 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { HEADLINE_SECTIONS } from '../data/headlineSections'
+import { EXAMPLE_CONVERSATIONAL_PROMPTS } from '../data/examplePrompts'
 import { apiUrl, describeChatRequestFailure } from '../config/api'
+import { CopyableMarkdownPre } from './CopyableMarkdownPre'
+import { ThumbDownIcon, ThumbUpIcon } from './icons/ThumbsFeedbackIcons'
 import './ChatInterface.css'
+
+const MARKDOWN_COMPONENTS = {
+  h2: ({ node, ...props }) => (
+    <h2 style={{ marginTop: '20px', marginBottom: '10px' }} {...props} />
+  ),
+  strong: ({ node, ...props }) => (
+    <strong style={{ fontWeight: 600 }} {...props} />
+  ),
+  p: ({ node, ...props }) => <p style={{ marginBottom: '12px' }} {...props} />,
+  pre: CopyableMarkdownPre,
+  table: ({ children, ...props }) => (
+    <div className="markdown-table-wrap">
+      <table {...props}>{children}</table>
+    </div>
+  ),
+}
 
 const INITIAL_MESSAGES = [
   {
@@ -72,7 +91,7 @@ function FeedbackRow({ message, messageIndex, conversationId, onFeedback }) {
             onClick={() => onFeedback(messageIndex, conversationId, turnIndex, true)}
             aria-label="Yes, helpful"
           >
-            👍
+            <ThumbUpIcon className="feedback-btn-icon" />
           </button>
           <button
             type="button"
@@ -80,7 +99,7 @@ function FeedbackRow({ message, messageIndex, conversationId, onFeedback }) {
             onClick={() => onFeedback(messageIndex, conversationId, turnIndex, false)}
             aria-label="No, not helpful"
           >
-            👎
+            <ThumbDownIcon className="feedback-btn-icon" />
           </button>
         </>
       )}
@@ -95,12 +114,27 @@ function ChatInterface() {
   const [isLoading, setIsLoading] = useState(false)
   const [isWarmingUp, setIsWarmingUp] = useState(false)
   const [expandedSource, setExpandedSource] = useState(null)
-  const messagesEndRef = useRef(null)
+  const messagesContainerRef = useRef(null)
+  const stickToBottomRef = useRef(true)
   const inputRef = useRef(null)
   const warmingUpTimerRef = useRef(null)
 
+  const PIN_THRESHOLD_PX = 80
+
+  const updateStickToBottomFromScroll = () => {
+    const el = messagesContainerRef.current
+    if (!el) return
+    const slack = PIN_THRESHOLD_PX
+    stickToBottomRef.current = el.scrollHeight - el.scrollTop - el.clientHeight <= slack
+  }
+
   const handlePillClick = (section) => {
     setInput(`I need clauses for ${section}`)
+    inputRef.current?.focus()
+  }
+
+  const handleExamplePromptClick = (text) => {
+    setInput(text)
     inputRef.current?.focus()
   }
 
@@ -118,7 +152,7 @@ function ChatInterface() {
         turn_index: turnIndex,
         helpful,
       }),
-    }).catch((err) => console.error('Feedback request failed:', err))
+    }).catch(() => {})
   }
 
   const startNewConversation = () => {
@@ -127,22 +161,33 @@ function ChatInterface() {
     setMessages(INITIAL_MESSAGES)
   }
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  const scrollMessagesPaneToBottom = () => {
+    const pane = messagesContainerRef.current
+    if (!pane) return
+    pane.scrollTop = pane.scrollHeight
   }
 
-  useEffect(() => {
-    scrollToBottom()
+  useLayoutEffect(() => {
+    if (!stickToBottomRef.current) return
+    scrollMessagesPaneToBottom()
   }, [messages])
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  /** Grow composer with content; cap height so messages stay reachable on small screens */
+  useLayoutEffect(() => {
+    const el = inputRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    const maxPx = 200
+    el.style.height = `${Math.min(el.scrollHeight, maxPx)}px`
+  }, [input])
 
+  const sendChatMessage = async () => {
     if (!input.trim() || isLoading) return
 
     const userMessage = input.trim()
     setInput('')
 
+    stickToBottomRef.current = true
     setMessages((prev) => [...prev, { role: 'user', content: userMessage, sources: [] }])
     setIsLoading(true)
     warmingUpTimerRef.current = setTimeout(() => setIsWarmingUp(true), 8000)
@@ -239,7 +284,6 @@ function ChatInterface() {
         }
       }
     } catch (error) {
-      console.error('Error:', error)
       const content = describeChatRequestFailure(error, error?.httpStatus)
       setMessages((prev) => [
         ...prev,
@@ -257,137 +301,181 @@ function ChatInterface() {
     }
   }
 
-  return (
-    <div className="chat-interface">
-      <div className="chat-header">
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    void sendChatMessage()
+  }
+
+  const handleComposerKeyDown = (e) => {
+    if (e.key !== 'Enter') return
+    if (e.shiftKey) return
+    e.preventDefault()
+    void sendChatMessage()
+  }
+
+  const isLanding = messages.length === 1 && messages[0]?.role === 'assistant'
+  const threadMessages = isLanding ? [] : messages.slice(1)
+
+  const startersRow = (
+    <div className="chat-starters-row" role="group" aria-label="Example questions">
+      {EXAMPLE_CONVERSATIONAL_PROMPTS.map((prompt) => (
         <button
+          key={prompt}
           type="button"
-          className="new-conversation-button"
-          onClick={startNewConversation}
+          className="starter-chip"
+          onClick={() => handleExamplePromptClick(prompt)}
           disabled={isLoading}
-          title="Start a new conversation"
         >
-          New conversation
+          {prompt}
         </button>
-      </div>
-      <div className="messages-container">
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.role}`}>
-            <div className="message-content">
-              {message.role === 'assistant' ? (
-                message.isStreaming ? (
-                  <div className="message-plain" style={{ whiteSpace: 'pre-wrap' }}>
-                    {message.content}
-                  </div>
-                ) : index === 0 ? (
-                  <>
-                    <ReactMarkdown
-                      components={{
-                        h2: ({ node, ...props }) => (
-                          <h2 style={{ marginTop: '20px', marginBottom: '10px' }} {...props} />
-                        ),
-                        strong: ({ node, ...props }) => (
-                          <strong style={{ fontWeight: 600 }} {...props} />
-                        ),
-                        p: ({ node, ...props }) => (
-                          <p style={{ marginBottom: '12px' }} {...props} />
-                        ),
-                      }}
-                    >
-                      {message.content}
-                    </ReactMarkdown>
-                    <p className="headline-pills-label">Or choose a topic to narrow your search:</p>
-                    <div className="headline-pills">
-                      {HEADLINE_SECTIONS.map((section) => (
-                        <button
-                          key={section}
-                          type="button"
-                          className="headline-pill"
-                          onClick={() => handlePillClick(section)}
-                          disabled={isLoading}
-                        >
-                          {section}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <ReactMarkdown
-                    components={{
-                      h2: ({ node, ...props }) => (
-                        <h2 style={{ marginTop: '20px', marginBottom: '10px' }} {...props} />
-                      ),
-                      strong: ({ node, ...props }) => (
-                        <strong style={{ fontWeight: 600 }} {...props} />
-                      ),
-                      p: ({ node, ...props }) => (
-                        <p style={{ marginBottom: '12px' }} {...props} />
-                      ),
-                    }}
-                  >
-                    {message.content}
-                  </ReactMarkdown>
-                )
-              ) : (
-                message.content
-              )}
-            </div>
-            {message.sources && message.sources.length > 0 && (
-              <SourceList
-                sources={message.sources}
-                messageIndex={index}
-                expandedSource={expandedSource}
-                onToggleSnippet={setExpandedSource}
-              />
-            )}
-            {message.role === 'assistant' && index > 0 && (
-              <FeedbackRow
-                message={message}
-                messageIndex={index}
-                conversationId={conversationId}
-                onFeedback={handleFeedback}
-              />
-            )}
-          </div>
-        ))}
-        {isLoading && (
-          <div className="message assistant">
-            <div className="message-content">
-              {isWarmingUp ? (
-                <p className="warming-up-message">
-                  The server is warming up — this can take up to a minute on first load. Hang tight...
-                </p>
-              ) : (
-                <div className="typing-indicator">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
-      
-      <form onSubmit={handleSubmit} className="input-form">
-        <input
+      ))}
+    </div>
+  )
+
+  const composerForm = (
+    <form onSubmit={handleSubmit} className="input-form" aria-label="Send a message">
+      <div className="composer-shell">
+        <textarea
           ref={inputRef}
-          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your question here..."
+          onKeyDown={handleComposerKeyDown}
+          placeholder="Describe your scenario or ask about a clause…"
           disabled={isLoading}
           className="message-input"
+          aria-label="Message"
+          rows={1}
+          spellCheck
+          autoComplete="off"
+          enterKeyHint="send"
         />
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={isLoading || !input.trim()}
-          className="send-button"
+          className="send-button composer-send"
+          aria-label="Send message"
+          title="Send"
         >
-          Send
+          <span aria-hidden="true">↑</span>
         </button>
-      </form>
+      </div>
+    </form>
+  )
+
+  return (
+    <div className="chat-interface">
+      <aside className="topic-sidebar" aria-label="Clause topics">
+        <p className="topic-sidebar-label">Narrow by topic</p>
+        <nav className="topic-sidebar-nav">
+          {HEADLINE_SECTIONS.map((section) => (
+            <button
+              key={section}
+              type="button"
+              className="topic-sidebar-pill"
+              onClick={() => handlePillClick(section)}
+              disabled={isLoading}
+            >
+              {section}
+            </button>
+          ))}
+        </nav>
+        <div className="topic-sidebar-footer">
+          <button
+            type="button"
+            className="new-conversation-button"
+            onClick={startNewConversation}
+            disabled={isLoading}
+            title="Start a new conversation"
+          >
+            New conversation
+          </button>
+        </div>
+      </aside>
+
+      <div className="chat-main">
+        {isLanding ? (
+          <div className="landing-stage">
+            <div className="landing-inner">
+              {messages[0] && (
+                <div className="chat-landing-intro">
+                  <ReactMarkdown components={MARKDOWN_COMPONENTS}>
+                    {messages[0].content}
+                  </ReactMarkdown>
+                </div>
+              )}
+              {composerForm}
+              {startersRow}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div
+              className="messages-container"
+              ref={messagesContainerRef}
+              onScroll={updateStickToBottomFromScroll}
+            >
+              <div className="messages-thread">
+              {threadMessages.map((message, idx) => {
+                const index = idx + 1
+                return (
+                <div key={index} className={`message ${message.role}`}>
+                  <div className="message-content">
+                    {message.role === 'assistant' ? (
+                      message.isStreaming ? (
+                        <div className="message-plain" style={{ whiteSpace: 'pre-wrap' }}>
+                          {message.content}
+                        </div>
+                      ) : (
+                        <ReactMarkdown components={MARKDOWN_COMPONENTS}>
+                          {message.content}
+                        </ReactMarkdown>
+                      )
+                    ) : (
+                      message.content
+                    )}
+                  </div>
+                  {message.sources && message.sources.length > 0 && (
+                    <SourceList
+                      sources={message.sources}
+                      messageIndex={index}
+                      expandedSource={expandedSource}
+                      onToggleSnippet={setExpandedSource}
+                    />
+                  )}
+                  {message.role === 'assistant' && index > 0 && (
+                    <FeedbackRow
+                      message={message}
+                      messageIndex={index}
+                      conversationId={conversationId}
+                      onFeedback={handleFeedback}
+                    />
+                  )}
+                </div>
+              )
+              })}
+              {isLoading && (
+                <div className="message assistant">
+                  <div className="message-content">
+                    {isWarmingUp ? (
+                      <p className="warming-up-message">
+                        The server is warming up — this can take up to a minute on first load. Hang tight...
+                      </p>
+                    ) : (
+                      <div className="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              </div>
+            </div>
+            {composerForm}
+          </>
+        )}
+      </div>
     </div>
   )
 }

@@ -147,7 +147,8 @@ Agent/
 ├── frontend/src/
 │   ├── App.jsx
 │   └── components/
-│       └── ChatInterface.jsx   Streaming, sources+snippets, feedback
+│       ├── ChatInterface.jsx   Streaming, sources+snippets, feedback
+│       └── FeedbackModal.jsx   Feature request modal + optional screenshot
 │
 ├── scripts/
 │   └── ingest_documents.py
@@ -180,6 +181,13 @@ Agent/
 ### 3. Configuration Management
 - Centralized in `config.py`
 - Environment variable support
+- **Slack — general feedback modal**
+  - **Text only** (POST `/api/feedback/general` with `message`): uses `SLACK_WEBHOOK_URL` or `SLACK_WEBHOOK` if set; **otherwise** falls back to `SLACK_BOT_TOKEN` + `SLACK_FEEDBACK_CHANNEL_ID` via `chat.postMessage` (so bot-only setups still receive feedback text).
+  - **With screenshot** (`multipart/form-data`: `message` + `screenshot` file): requires **Slack Bot** env vars — incoming webhooks cannot attach files. Uploads use **`files.getUploadURLExternal` + `files.completeUploadExternal`** (modern apps no longer support legacy `files.upload`).
+    - Env: `SLACK_BOT_TOKEN` — Bot token (`xoxb-…`).
+    - Env: `SLACK_FEEDBACK_CHANNEL_ID` — Channel ID where posts should appear (e.g. `C…`). Invite the bot to that channel.
+    - Slack app scopes: **`files:write`**, and **`chat:write`** if you rely on the bot for text (no webhook). Re-install the app to workspace after adding scopes.
+  - If the client sends a screenshot but these vars are unset, the API returns **400** with a clear `detail` message.
 
 ### 4. Error Handling
 - Graceful fallbacks ("I don't know")
@@ -233,6 +241,10 @@ Agent/
   "helpful": true
 }
 ```
+
+### General feedback (POST /api/feedback/general)
+- `Content-Type: multipart/form-data`
+- Fields: `message` (string, optional if a screenshot is attached), `screenshot` (optional file, PNG).
 
 ### Vector Database Entry
 ```python

@@ -1,8 +1,9 @@
 """FastAPI application for CS chatbot."""
 import asyncio
 import json
+import pathlib
 import time
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -119,17 +120,39 @@ async def feedback(request: FeedbackRequest):
     return {"ok": True}
 
 
-class GeneralFeedbackRequest(BaseModel):
-    message: str
-
-
 @app.post("/api/feedback/general")
-async def general_feedback(request: GeneralFeedbackRequest):
-    """Forward freetext feedback from the Feedback modal to Slack."""
-    message = (request.message or "").strip()
-    if not message:
+async def general_feedback(
+    message: str = Form(""),
+    screenshot: Optional[UploadFile] = File(None),
+):
+    """Forward feedback from the Feedback modal to Slack (text webhook and/or file upload)."""
+    text = (message or "").strip()
+
+    payload: Optional[bytes] = None
+    filename: Optional[str] = None
+    if screenshot is not None and (screenshot.filename or "").strip():
+        payload = await screenshot.read()
+        filename = screenshot.filename
+
+    if payload:
+        if not (Config.SLACK_BOT_TOKEN or "").strip() or not (
+            Config.SLACK_FEEDBACK_CHANNEL_ID or ""
+        ).strip():
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    "Screenshot uploads require SLACK_BOT_TOKEN and "
+                    "SLACK_FEEDBACK_CHANNEL_ID to be configured"
+                ),
+            )
+        if not text:
+            text = ""
+        feedback_store.send_general_feedback_with_screenshot(text, payload, filename or "screenshot.png")
+        return {"ok": True}
+
+    if not text:
         raise HTTPException(status_code=400, detail="Message cannot be empty")
-    feedback_store.send_general_feedback(message)
+    feedback_store.send_general_feedback(text)
     return {"ok": True}
 
 
@@ -267,10 +290,15 @@ async def chat_stream(request: ChatRequest):
 if __name__ == "__main__":
     import uvicorn
     from backend.config import Config
-    
+
+    # Reload only backend package changes — avoids restarting when tooling edits
+    # `.cursor/` or frontend files while the repo root is watched.
+    _reload_root = pathlib.Path(__file__).resolve().parent
+
     uvicorn.run(
         "backend.main:app",
         host=Config.API_HOST,
         port=Config.API_PORT,
-        reload=True
+        reload=True,
+        reload_dirs=[str(_reload_root)],
     )

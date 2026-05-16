@@ -6,9 +6,10 @@ from dotenv import load_dotenv
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 _env_file = _PROJECT_ROOT / ".env"
-load_dotenv(_env_file)
-if not (os.getenv("OPENAI_API_KEY") or "").strip():
-    load_dotenv(_env_file, override=True)
+# Prefer values from project `.env` over pre-existing shell exports so local
+# dev matches editing `.env` (stale OPENAI_API_KEY in ~/.zshrc won't win).
+# Production usually has no `.env` on disk; the platform injects env vars instead.
+load_dotenv(_env_file, override=True)
 
 class Config:
     """Application configuration."""
@@ -42,3 +43,7 @@ class Config:
 
     # CORS — set FRONTEND_URL on Render to your Vercel URL to narrow origins in production
     FRONTEND_URL = os.getenv("FRONTEND_URL", "").strip()
+
+    # Slack — general feedback modal (text via incoming webhook; screenshots via bot API)
+    SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN", "").strip()
+    SLACK_FEEDBACK_CHANNEL_ID = os.getenv("SLACK_FEEDBACK_CHANNEL_ID", "").strip()

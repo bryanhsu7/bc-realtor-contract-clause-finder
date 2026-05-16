@@ -1,6 +1,12 @@
 /* Evergreen design system — single source for accent colors and typography */
 
 :root {
+  /* Safe areas (notched devices / home indicator) — used with viewport-fit=cover */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
   /* Core accent (readable on white) */
   --color-accent: #0f766e;
   --color-accent-dark: #0d5f58;
@@ -29,7 +35,19 @@
   --color-pill-hover-border: #34d399;
   --color-pill-active-bg: #a7f3d0;
 
+  /* Message feedback — thumb icons (amber / gold) */
+  --color-feedback-thumb-up: #ca8a04;
+  --color-feedback-thumb-down: #a16207;
+
   /* Typography — loaded in index.html */
   --font-heading: 'Fraunces', 'Georgia', 'Times New Roman', serif;
   --font-body: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+
+  /* App scale — --fs-root on html so rem-based sizes track body text */
+  --fs-root: clamp(15px, 0.22vw + 14px, 17.5px);
+  --fs-app-title: clamp(1.55rem, 2vw + 1.05rem, 1.95rem);
+  --fs-app-subtitle: 1.125rem;
+  --fs-ui: 1rem;
+  --fs-ui-sm: 0.9375rem;
+  --fs-pill: 0.90625rem;
 }

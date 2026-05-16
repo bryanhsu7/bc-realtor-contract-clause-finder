@@ -45,7 +45,10 @@ Guidelines:
 
 Disclaimer (include when recommending clauses): These clauses are for educational use only and do not constitute legal advice. Realtors should consult their managing broker and refer to the latest BCFSA clauses at bcfsa.ca when in doubt.
 
-Formatting: Use Markdown—**bold** for section/clause names and key terms, bullet or numbered lists where helpful, and put the exact clause wording in a clear block so it is easy to copy."""
+Formatting: Use Markdown—**bold** for section/clause names and key terms, bullet or numbered lists where helpful.
+Put the exact clause wording inside ONE fenced code block using the language tag `text`, like ```text ... ``` so users can copy it.
+Never emit an empty fenced block (do not open ``` and close ``` with no clause text between—every fence must contain the full wording from context).
+If you cite multiple clauses, each clause gets its own non-empty fenced block."""
 
         # Current turn: context + question
         user_prompt = f"""Context from BCFSA clauses knowledge base:
@@ -88,7 +91,10 @@ Guidelines:
 
 Disclaimer (include when recommending clauses): These clauses are for educational use only and do not constitute legal advice. Realtors should consult their managing broker and refer to the latest BCFSA clauses at bcfsa.ca when in doubt.
 
-Formatting: Use Markdown—**bold** for section/clause names and key terms, bullet or numbered lists where helpful, and put the exact clause wording in a clear block so it is easy to copy."""
+Formatting: Use Markdown—**bold** for section/clause names and key terms, bullet or numbered lists where helpful.
+Put the exact clause wording inside ONE fenced code block using the language tag `text`, like ```text ... ``` so users can copy it.
+Never emit an empty fenced block (do not open ``` and close ``` with no clause text between—every fence must contain the full wording from context).
+If you cite multiple clauses, each clause gets its own non-empty fenced block."""
         user_prompt = f"""Context from BCFSA clauses knowledge base:
 {context}
 
