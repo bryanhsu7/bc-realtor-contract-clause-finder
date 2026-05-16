@@ -14,7 +14,6 @@ build/
 
 # Vector database
 chroma_db/
-chroma_db_realtor_clauses/
 *.db
 *.sqlite
 
@@ -43,3 +42,4 @@ Thumbs.db
 
 # Brainstorm / scratch notes (local only)
 brainstorming/
+.vercel

@@ -66,7 +66,7 @@ Answer using the context above. When recommending a clause, state the Section an
             model=self.model,
             messages=messages,
             temperature=0.7,
-            max_tokens=1000,
+            max_tokens=2000,
         )
         return response.choices[0].message.content
 
@@ -105,7 +105,7 @@ Answer using the context above. When recommending a clause, state the Section an
             model=self.model,
             messages=messages,
             temperature=0.7,
-            max_tokens=1000,
+            max_tokens=2000,
             stream=True,
         )
         async for chunk in stream:

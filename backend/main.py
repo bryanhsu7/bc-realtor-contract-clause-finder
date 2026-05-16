@@ -14,10 +14,15 @@ from backend.feedback_store import FeedbackStore
 
 app = FastAPI(title="CS Agent Chatbot API", version="1.0.0")
 
-# CORS middleware to allow frontend to connect
+# Narrow CORS to the Vercel frontend in production; fall back to wildcard in dev
+_allowed_origins = (
+    ["http://localhost:3000", Config.FRONTEND_URL]
+    if Config.FRONTEND_URL
+    else ["*"]
+)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify your frontend URL
+    allow_origins=_allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -93,9 +93,11 @@ function ChatInterface() {
   const [conversationId, setConversationId] = useState(null)
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isWarmingUp, setIsWarmingUp] = useState(false)
   const [expandedSource, setExpandedSource] = useState(null)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+  const warmingUpTimerRef = useRef(null)
 
   const handlePillClick = (section) => {
     setInput(`I need clauses for ${section}`)
@@ -143,6 +145,7 @@ function ChatInterface() {
 
     setMessages((prev) => [...prev, { role: 'user', content: userMessage, sources: [] }])
     setIsLoading(true)
+    warmingUpTimerRef.current = setTimeout(() => setIsWarmingUp(true), 8000)
 
     try {
       const response = await fetch(apiUrl('/api/chat/stream'), {
@@ -162,6 +165,8 @@ function ChatInterface() {
       }
 
       const reader = response.body.getReader()
+      clearTimeout(warmingUpTimerRef.current)
+      setIsWarmingUp(false)
       const decoder = new TextDecoder()
       let buffer = ''
 
@@ -246,6 +251,8 @@ function ChatInterface() {
         },
       ])
     } finally {
+      clearTimeout(warmingUpTimerRef.current)
+      setIsWarmingUp(false)
       setIsLoading(false)
     }
   }
@@ -346,11 +353,17 @@ function ChatInterface() {
         {isLoading && (
           <div className="message assistant">
             <div className="message-content">
-              <div className="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
+              {isWarmingUp ? (
+                <p className="warming-up-message">
+                  The server is warming up — this can take up to a minute on first load. Hang tight...
+                </p>
+              ) : (
+                <div className="typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              )}
             </div>
           </div>
         )}

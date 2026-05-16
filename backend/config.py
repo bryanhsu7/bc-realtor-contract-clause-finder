@@ -39,3 +39,6 @@ class Config:
 
     # Performance settings
     ENABLE_EMBEDDING_CACHE = True  # Cache embeddings for faster repeated queries
+
+    # CORS — set FRONTEND_URL on Render to your Vercel URL to narrow origins in production
+    FRONTEND_URL = os.getenv("FRONTEND_URL", "").strip()

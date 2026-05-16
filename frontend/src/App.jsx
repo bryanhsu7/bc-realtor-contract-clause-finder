@@ -8,10 +8,6 @@ function App() {
   const [feedbackOpen, setFeedbackOpen] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
 
-  const handleSupportClick = () => {
-    // No route yet – placeholder for future support link
-  }
-
   const openFeedback = () => {
     setFeedbackText('')
     setFeedbackOpen(true)
@@ -45,13 +41,6 @@ function App() {
             onClick={openFeedback}
           >
             Feedback
-          </button>
-          <button
-            type="button"
-            className="header-button support-button"
-            onClick={handleSupportClick}
-          >
-            Support
           </button>
         </div>
       </div>

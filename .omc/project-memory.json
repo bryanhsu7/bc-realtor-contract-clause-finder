@@ -1,0 +1,251 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1778933687769,
+  "projectRoot": "/Users/bryanhsu/Documents/Cursor/bc-realtor-clauses",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "requirements.txt"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "pip",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "scripts"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "backend": {
+      "path": "backend",
+      "purpose": null,
+      "fileCount": 10,
+      "lastAccessed": 1778933687724,
+      "keyFiles": [
+        "__init__.py",
+        "config.py",
+        "conversation_store.py",
+        "embeddings.py",
+        "feedback_store.py"
+      ]
+    },
+    "brainstorming": {
+      "path": "brainstorming",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1778933687728,
+      "keyFiles": [
+        "brainstorm-with-me-i-rustling-axolotl.md"
+      ]
+    },
+    "chroma_db_realtor_clauses": {
+      "path": "chroma_db_realtor_clauses",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1778933687732,
+      "keyFiles": [
+        "chroma.sqlite3"
+      ]
+    },
+    "frontend": {
+      "path": "frontend",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1778933687735,
+      "keyFiles": [
+        "index.html",
+        "package-lock.json",
+        "package.json",
+        "vite.config.js"
+      ]
+    },
+    "knowledge_base": {
+      "path": "knowledge_base",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1778933687737,
+      "keyFiles": [
+        "bcfsa_clauses.txt",
+        "robinhood_retirement_faqs.txt"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 5,
+      "lastAccessed": 1778933687738,
+      "keyFiles": [
+        "ingest_bcfsa_clauses.py",
+        "ingest_documents.py",
+        "scrape_bcfsa_clauses.py",
+        "scrape_faqs.py",
+        "scrape_robinhood_retirement.py"
+      ]
+    },
+    "venv": {
+      "path": "venv",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1778933687743,
+      "keyFiles": [
+        "pyvenv.cfg"
+      ]
+    },
+    "frontend/dist": {
+      "path": "frontend/dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 1,
+      "lastAccessed": 1778933687757,
+      "keyFiles": [
+        "index.html"
+      ]
+    },
+    "frontend/node_modules": {
+      "path": "frontend/node_modules",
+      "purpose": "Dependencies",
+      "fileCount": 1,
+      "lastAccessed": 1778933687761,
+      "keyFiles": []
+    },
+    "frontend/src": {
+      "path": "frontend/src",
+      "purpose": "Source code",
+      "fileCount": 4,
+      "lastAccessed": 1778933687762,
+      "keyFiles": [
+        "App.css",
+        "App.jsx",
+        "index.css"
+      ]
+    },
+    "venv/bin": {
+      "path": "venv/bin",
+      "purpose": "Executable scripts",
+      "fileCount": 31,
+      "lastAccessed": 1778933687764,
+      "keyFiles": [
+        "Activate.ps1",
+        "activate",
+        "activate.csh"
+      ]
+    },
+    "venv/lib": {
+      "path": "venv/lib",
+      "purpose": "Library code",
+      "fileCount": 0,
+      "lastAccessed": 1778933687769,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "frontend/src/components/ChatInterface.jsx",
+      "accessCount": 10,
+      "lastAccessed": 1778933789213,
+      "type": "file"
+    },
+    {
+      "path": "backend/main.py",
+      "accessCount": 6,
+      "lastAccessed": 1778933751946,
+      "type": "file"
+    },
+    {
+      "path": "frontend/src/App.jsx",
+      "accessCount": 5,
+      "lastAccessed": 1778509507521,
+      "type": "file"
+    },
+    {
+      "path": "backend/config.py",
+      "accessCount": 5,
+      "lastAccessed": 1778933749116,
+      "type": "file"
+    },
+    {
+      "path": "backend/llm_client.py",
+      "accessCount": 4,
+      "lastAccessed": 1778509506498,
+      "type": "file"
+    },
+    {
+      "path": "backend/rag_chain.py",
+      "accessCount": 2,
+      "lastAccessed": 1778419417743,
+      "type": "file"
+    },
+    {
+      "path": "backend/feedback_store.py",
+      "accessCount": 2,
+      "lastAccessed": 1778421428509,
+      "type": "file"
+    },
+    {
+      "path": ".env",
+      "accessCount": 2,
+      "lastAccessed": 1778421837905,
+      "type": "file"
+    },
+    {
+      "path": "DEPLOY.md",
+      "accessCount": 1,
+      "lastAccessed": 1778419402851,
+      "type": "file"
+    },
+    {
+      "path": "frontend/package.json",
+      "accessCount": 1,
+      "lastAccessed": 1778419419197,
+      "type": "file"
+    },
+    {
+      "path": "frontend/src/config/api.js",
+      "accessCount": 1,
+      "lastAccessed": 1778419440312,
+      "type": "file"
+    },
+    {
+      "path": "frontend/src/data/headlineSections.js",
+      "accessCount": 1,
+      "lastAccessed": 1778419441126,
+      "type": "file"
+    },
+    {
+      "path": "backend/vector_store.py",
+      "accessCount": 1,
+      "lastAccessed": 1778419441442,
+      "type": "file"
+    },
+    {
+      "path": "backend/conversation_store.py",
+      "accessCount": 1,
+      "lastAccessed": 1778419896116,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
