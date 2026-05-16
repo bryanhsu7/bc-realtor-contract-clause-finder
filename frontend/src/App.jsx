@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import ChatInterface from './components/ChatInterface'
 import FeedbackModal from './components/FeedbackModal'
 import './App.css'
@@ -37,6 +38,7 @@ function App() {
       <ChatInterface />
 
       <FeedbackModal isOpen={feedbackOpen} onClose={closeFeedback} />
+      <Analytics />
     </div>
   )
 }
