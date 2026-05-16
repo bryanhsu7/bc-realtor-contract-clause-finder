@@ -1,30 +1,43 @@
 import React, { useState } from 'react'
 import ChatInterface from './components/ChatInterface'
+import { apiUrl } from './config/api'
 import './App.css'
-
-const FEEDBACK_EMAIL = import.meta.env.VITE_FEEDBACK_EMAIL || ''
 
 function App() {
   const [feedbackOpen, setFeedbackOpen] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
+  const [feedbackSending, setFeedbackSending] = useState(false)
+  const [feedbackSent, setFeedbackSent] = useState(false)
 
   const openFeedback = () => {
     setFeedbackText('')
+    setFeedbackSent(false)
     setFeedbackOpen(true)
   }
 
   const closeFeedback = () => {
     setFeedbackOpen(false)
     setFeedbackText('')
+    setFeedbackSent(false)
   }
 
-  const sendFeedback = () => {
-    const subject = encodeURIComponent('Realtor Clause Assistant – Feature request / Feedback')
-    const body = encodeURIComponent(feedbackText.trim() || '(No message provided)')
-    const to = FEEDBACK_EMAIL ? `mailto:${FEEDBACK_EMAIL}` : 'mailto:'
-    const url = `${to}?subject=${subject}&body=${body}`
-    window.open(url, '_blank', 'noopener,noreferrer')
-    closeFeedback()
+  const sendFeedback = async () => {
+    const message = feedbackText.trim()
+    if (!message || feedbackSending) return
+    setFeedbackSending(true)
+    try {
+      await fetch(apiUrl('/api/feedback/general'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
+      })
+    } catch (_) {
+      // best-effort — don't block the tester on a network hiccup
+    } finally {
+      setFeedbackSending(false)
+      setFeedbackSent(true)
+      setTimeout(closeFeedback, 1500)
+    }
   }
 
   return (
@@ -56,25 +69,41 @@ function App() {
             aria-modal="true"
           >
             <h2 id="feedback-title">Feature request or feedback</h2>
-            <p className="feedback-description">
-              Share ideas, report issues, or suggest improvements. Your message will open in your email client.
-            </p>
-            <textarea
-              className="feedback-textarea"
-              value={feedbackText}
-              onChange={(e) => setFeedbackText(e.target.value)}
-              placeholder="Type your feedback or feature request..."
-              rows={4}
-              aria-label="Feedback message"
-            />
-            <div className="feedback-modal-actions">
-              <button type="button" className="feedback-cancel" onClick={closeFeedback}>
-                Cancel
-              </button>
-              <button type="button" className="feedback-send" onClick={sendFeedback}>
-                Send feedback
-              </button>
-            </div>
+            {feedbackSent ? (
+              <p className="feedback-sent-message">Thanks — your feedback has been sent!</p>
+            ) : (
+              <>
+                <p className="feedback-description">
+                  Share ideas, report issues, or suggest improvements.
+                </p>
+                <textarea
+                  className="feedback-textarea"
+                  value={feedbackText}
+                  onChange={(e) => setFeedbackText(e.target.value)}
+                  placeholder="Type your feedback or feature request..."
+                  rows={4}
+                  aria-label="Feedback message"
+                />
+                <div className="feedback-modal-actions">
+                  <button
+                    type="button"
+                    className="feedback-cancel"
+                    onClick={closeFeedback}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="feedback-send"
+                    onClick={sendFeedback}
+                    disabled={!feedbackText.trim() || feedbackSending}
+                  >
+                    {feedbackSending ? 'Sending…' : 'Send'}
+                  </button>
+                </div>
+              </>
+            )}
+
           </div>
         </div>
       )}

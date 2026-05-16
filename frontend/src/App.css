@@ -5,8 +5,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 80vh;
-  max-height: 700px;
+  height: 92vh;
+  height: min(92vh, calc(100dvh - 32px));
+  max-height: none;
 }
 
 .app-header {
@@ -168,4 +169,17 @@
 .feedback-send:hover {
   opacity: 0.95;
   box-shadow: 0 2px 8px rgba(var(--color-accent-rgb), 0.35);
+}
+
+.feedback-send:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.feedback-sent-message {
+  text-align: center;
+  padding: 24px 0 8px;
+  font-size: 15px;
+  color: #3a7d44;
+  font-weight: 500;
 }

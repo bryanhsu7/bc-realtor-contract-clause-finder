@@ -119,6 +119,20 @@ async def feedback(request: FeedbackRequest):
     return {"ok": True}
 
 
+class GeneralFeedbackRequest(BaseModel):
+    message: str
+
+
+@app.post("/api/feedback/general")
+async def general_feedback(request: GeneralFeedbackRequest):
+    """Forward freetext feedback from the Feedback modal to Slack."""
+    message = (request.message or "").strip()
+    if not message:
+        raise HTTPException(status_code=400, detail="Message cannot be empty")
+    feedback_store.send_general_feedback(message)
+    return {"ok": True}
+
+
 def _validate_question_length(question: str) -> None:
     """Raise 400 if question exceeds max length."""
     q = (question or "").strip()

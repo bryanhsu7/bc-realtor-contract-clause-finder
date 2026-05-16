@@ -20,10 +20,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 16px;
 }
 
 #root {
   width: 100%;
-  max-width: 800px;
+  max-width: min(1200px, calc(100vw - 32px));
 }
