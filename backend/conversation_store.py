@@ -1,19 +1,22 @@
 """In-memory conversation history store."""
 import uuid
+from collections import OrderedDict
 from typing import Dict, List, Optional
 
 
 class ConversationStore:
     """Stores recent messages per conversation for context in follow-up turns."""
 
-    def __init__(self, max_turns: int = 10):
+    def __init__(self, max_turns: int = 10, max_conversations: int = 10000):
         """Initialize the store.
 
         Args:
             max_turns: Max user+assistant pairs to keep per conversation (default 10).
+            max_conversations: Max distinct conversations before evicting the oldest (default 10000).
         """
-        self._store: Dict[str, List[Dict[str, str]]] = {}
+        self._store: OrderedDict[str, List[Dict[str, str]]] = OrderedDict()
         self._max_turns = max_turns
+        self._max_conversations = max_conversations
 
     def create_id(self) -> str:
         """Generate a new conversation id."""
@@ -22,7 +25,10 @@ class ConversationStore:
     def add_message(self, conversation_id: str, role: str, content: str) -> None:
         """Append a message to a conversation. Trims to max_turns if needed."""
         if conversation_id not in self._store:
+            if len(self._store) >= self._max_conversations:
+                self._store.popitem(last=False)
             self._store[conversation_id] = []
+        self._store.move_to_end(conversation_id)
         self._store[conversation_id].append({"role": role, "content": content})
         self._trim(conversation_id)
 

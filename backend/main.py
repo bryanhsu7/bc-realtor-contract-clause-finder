@@ -1,9 +1,11 @@
 """FastAPI application for CS chatbot."""
 import asyncio
 import json
+import logging
 import pathlib
 import time
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from collections import defaultdict
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -12,6 +14,34 @@ from backend.config import Config
 from backend.rag_chain import RAGChain
 from backend.conversation_store import ConversationStore
 from backend.feedback_store import FeedbackStore
+
+logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# Per-IP sliding-window rate limiter (in-memory, single-process)
+# ---------------------------------------------------------------------------
+_rate_windows: dict = defaultdict(list)
+_ALLOWED_IMAGE_MIME_TYPES = frozenset({"image/png", "image/jpeg", "image/gif", "image/webp"})
+
+
+def _client_ip(request: Request) -> str:
+    forwarded = request.headers.get("X-Forwarded-For")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _check_rate_limit(ip: str, max_requests: int, window_seconds: int = 60) -> bool:
+    now = time.monotonic()
+    cutoff = now - window_seconds
+    _rate_windows[ip] = [t for t in _rate_windows[ip] if t > cutoff]
+    if len(_rate_windows[ip]) >= max_requests:
+        return False
+    _rate_windows[ip].append(now)
+    # Prevent the dict from growing indefinitely on long-running servers
+    if len(_rate_windows) > 200_000:
+        _rate_windows.clear()
+    return True
 
 app = FastAPI(title="CS Agent Chatbot API", version="1.0.0")
 
@@ -30,7 +60,7 @@ app.add_middleware(
 )
 
 _rag_chain: Optional[RAGChain] = None
-conversation_store = ConversationStore()
+conversation_store = ConversationStore(max_conversations=Config.MAX_CONVERSATIONS)
 feedback_store = FeedbackStore()
 
 
@@ -50,9 +80,10 @@ def get_rag_chain() -> RAGChain:
     try:
         _rag_chain = RAGChain()
     except Exception as e:
+        logger.error("RAG chain initialization failed: %s", e, exc_info=True)
         raise HTTPException(
             status_code=503,
-            detail=f"Chat backend failed to initialize: {e}",
+            detail="Chat service is temporarily unavailable. Please try again later.",
         ) from e
     return _rag_chain
 
@@ -122,16 +153,37 @@ async def feedback(request: FeedbackRequest):
 
 @app.post("/api/feedback/general")
 async def general_feedback(
+    request: Request,
     message: str = Form(""),
     screenshot: Optional[UploadFile] = File(None),
 ):
     """Forward feedback from the Feedback modal to Slack (text webhook and/or file upload)."""
+    ip = _client_ip(request)
+    if not _check_rate_limit(ip, Config.RATE_LIMIT_FEEDBACK_RPM):
+        raise HTTPException(status_code=429, detail="Too many requests. Please slow down.")
+
     text = (message or "").strip()
+    if len(text) > Config.MAX_FEEDBACK_LENGTH:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Message must be at most {Config.MAX_FEEDBACK_LENGTH} characters.",
+        )
 
     payload: Optional[bytes] = None
     filename: Optional[str] = None
     if screenshot is not None and (screenshot.filename or "").strip():
+        content_type = (screenshot.content_type or "").lower().split(";")[0].strip()
+        if content_type not in _ALLOWED_IMAGE_MIME_TYPES:
+            raise HTTPException(
+                status_code=400,
+                detail="Only image files (PNG, JPEG, GIF, WebP) are accepted.",
+            )
         payload = await screenshot.read()
+        if len(payload) > Config.MAX_UPLOAD_SIZE_BYTES:
+            raise HTTPException(
+                status_code=413,
+                detail=f"Screenshot must be under {Config.MAX_UPLOAD_SIZE_BYTES // (1024 * 1024)} MB.",
+            )
         filename = screenshot.filename
 
     if payload:
@@ -170,12 +222,16 @@ def _validate_question_length(question: str) -> None:
 
 
 @app.post("/api/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
+async def chat(request: ChatRequest, req: Request):
     """Chat endpoint - processes user questions and returns answers.
 
     Uses conversation_id to load prior turns and pass them to the LLM for
     coherent follow-up answers. Creates a new conversation_id when none is sent.
     """
+    ip = _client_ip(req)
+    if not _check_rate_limit(ip, Config.RATE_LIMIT_CHAT_RPM):
+        raise HTTPException(status_code=429, detail="Too many requests. Please slow down.")
+
     _validate_question_length(request.question)
 
     conversation_id = request.conversation_id or conversation_store.create_id()
@@ -195,8 +251,9 @@ async def chat(request: ChatRequest):
             detail=f"Request timed out after {Config.CHAT_TIMEOUT_SECONDS:.0f} seconds.",
         )
     except Exception as e:
+        logger.error("Chat query failed: %s", e, exc_info=True)
         raise HTTPException(
-            status_code=500, detail=f"Error processing question: {str(e)}"
+            status_code=500, detail="Error processing your question. Please try again."
         )
 
     conversation_store.add_message(conversation_id, "user", request.question)
@@ -222,8 +279,12 @@ def _sse_line(obj: dict) -> str:
 
 
 @app.post("/api/chat/stream")
-async def chat_stream(request: ChatRequest):
+async def chat_stream(request: ChatRequest, req: Request):
     """Stream the assistant reply as SSE. Same request body as /api/chat."""
+    ip = _client_ip(req)
+    if not _check_rate_limit(ip, Config.RATE_LIMIT_CHAT_RPM):
+        raise HTTPException(status_code=429, detail="Too many requests. Please slow down.")
+
     _validate_question_length(request.question)
 
     conversation_id = request.conversation_id or conversation_store.create_id()
@@ -278,7 +339,8 @@ async def chat_stream(request: ChatRequest):
                     conversation_store.add_message(conversation_id, "assistant", accumulated)
                     yield _sse_line({"event": "done"})
         except Exception as e:
-            yield _sse_line({"event": "error", "message": str(e)})
+            logger.error("SSE stream error: %s", e, exc_info=True)
+            yield _sse_line({"event": "error", "message": "An unexpected error occurred. Please try again."})
 
     return StreamingResponse(
         event_stream(),

@@ -19,7 +19,7 @@ class EmbeddingGenerator:
     
     def _get_cache_key(self, text: str) -> str:
         """Generate cache key for text."""
-        return hashlib.md5(f"{self.model}:{text}".encode()).hexdigest()
+        return hashlib.md5(f"{self.model}:{text}".encode(), usedforsecurity=False).hexdigest()
     
     async def generate_embedding(self, text: str) -> List[float]:
         """Generate embedding for a single text with caching.

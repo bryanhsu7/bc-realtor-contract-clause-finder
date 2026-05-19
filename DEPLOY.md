@@ -74,7 +74,6 @@ In the same project, open **Settings → Environment Variables** and add:
 | Name                | Value                                       | Notes                                   |
 |---------------------|---------------------------------------------|-----------------------------------------|
 | `VITE_API_URL`      | `https://your-backend-url.com`              | Backend URL from Step 1 (no trailing `/`) |
-| `VITE_FEEDBACK_EMAIL` | (optional) `feedback@yourdomain.com`      | Pre‑fills “To” for the feedback mailto  |
 
 Save. Redeploy so the new variables are used in the build (Vite inlines them at build time).
 
@@ -89,25 +88,13 @@ Your app will be at `https://your-project.vercel.app` (or your custom domain).
 
 ## Step 3: CORS on the backend
 
-The frontend origin (e.g. `https://your-project.vercel.app`) must be allowed by the backend. In `backend/main.py` the FastAPI app should allow that origin, for example:
+The backend reads `FRONTEND_URL` from the environment to narrow CORS to your Vercel origin. Set it on Render (or Railway):
 
-```python
-from fastapi.middleware.cors import CORSMiddleware
+| Name            | Value                               | Notes                         |
+|-----------------|-------------------------------------|-------------------------------|
+| `FRONTEND_URL`  | `https://your-project.vercel.app`   | Your Vercel deployment URL    |
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "https://your-project.vercel.app",  # add your Vercel URL
-        "https://*.vercel.app",             # or use a pattern if your host supports it
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-```
-
-If your backend already has a permissive `allow_origins=["*"]` for development, you can leave it for now, or narrow it to your real frontend URL(s) for production.
+Without `FRONTEND_URL` the backend falls back to `allow_origins=["*"]`, which works for development but should be tightened for production.
 
 ---
 
@@ -118,8 +105,8 @@ If your backend already has a permissive `allow_origins=["*"]` for development, 
 - [ ] Chroma DB (or equivalent) available to the backend and populated (scrape + ingest).
 - [ ] Frontend deployed on Vercel with **Root Directory** = `frontend`.
 - [ ] `VITE_API_URL` set in Vercel to the backend URL (no trailing slash).
-- [ ] Backend allows the Vercel origin in CORS.
-- [ ] Optional: `VITE_FEEDBACK_EMAIL` set in Vercel if you use the feedback mailto.
+- [ ] `FRONTEND_URL` set on the backend (Render) to your Vercel URL.
+- [ ] `SLACK_WEBHOOK_URL` set on the backend (Render) to receive user feedback in Slack.
 
 ---
 

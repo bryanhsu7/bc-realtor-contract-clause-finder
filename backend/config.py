@@ -24,7 +24,7 @@ class Config:
     COLLECTION_NAME = os.getenv("COLLECTION_NAME", "realtor_clauses")
     
     # API settings
-    API_HOST = os.getenv("API_HOST", "0.0.0.0")
+    API_HOST = os.getenv("API_HOST", "0.0.0.0")  # nosec B104 — intentional for container deployment
     API_PORT = int(os.getenv("API_PORT", "8000"))
     
     # RAG settings
@@ -47,3 +47,14 @@ class Config:
     # Slack — general feedback modal (text via incoming webhook; screenshots via bot API)
     SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN", "").strip()
     SLACK_FEEDBACK_CHANNEL_ID = os.getenv("SLACK_FEEDBACK_CHANNEL_ID", "").strip()
+
+    # Upload and feedback limits
+    MAX_FEEDBACK_LENGTH = int(os.getenv("MAX_FEEDBACK_LENGTH", "5000"))
+    MAX_UPLOAD_SIZE_BYTES = int(os.getenv("MAX_UPLOAD_SIZE_BYTES", str(5 * 1024 * 1024)))  # 5 MB
+
+    # Conversation store cap (prevents unbounded memory growth)
+    MAX_CONVERSATIONS = int(os.getenv("MAX_CONVERSATIONS", "10000"))
+
+    # Per-IP rate limits (requests per minute)
+    RATE_LIMIT_CHAT_RPM = int(os.getenv("RATE_LIMIT_CHAT_RPM", "20"))
+    RATE_LIMIT_FEEDBACK_RPM = int(os.getenv("RATE_LIMIT_FEEDBACK_RPM", "30"))
