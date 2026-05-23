@@ -141,8 +141,11 @@ class FeedbackRequest(BaseModel):
 
 
 @app.post("/api/feedback")
-async def feedback(request: FeedbackRequest):
+async def feedback(request: FeedbackRequest, req: Request):
     """Record thumbs up/down for an assistant turn. Used for tuning and analytics."""
+    ip = _client_ip(req)
+    if not _check_rate_limit(ip, Config.RATE_LIMIT_FEEDBACK_RPM):
+        raise HTTPException(status_code=429, detail="Too many requests. Please slow down.")
     feedback_store.add(
         conversation_id=request.conversation_id,
         turn_index=request.turn_index,
